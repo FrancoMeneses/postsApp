@@ -1,0 +1,8 @@
+#node
+node_modules
+
+#enviroment variables
+.env
+
+#other
+.DS_Store
