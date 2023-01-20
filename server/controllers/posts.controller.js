@@ -1,4 +1,6 @@
 import Post from "../models/post.js"
+import { uploadImage, deleteImage } from "../libs/cloudinary.js"
+import fs from 'fs-extra'
 
 export const getPost = async (req, res) => {
   try {
@@ -31,7 +33,10 @@ export const deletePost = async(req, res) => {
   try {
     const postDeleted = await Post.findByIdAndDelete(req.params.id)
     if(!postDeleted) return res.status(404).json("Could not find this post")
-    res.sendStatus(204)
+    if(postDeleted.image.public_id){
+      let r = await deleteImage(postDeleted.image.public_id)
+  }
+    return res.sendStatus(204)
   } catch (error) {
     return res.status(500).json(error)
   }
@@ -40,7 +45,18 @@ export const deletePost = async(req, res) => {
 export const createPost = async (req, res) => {
   try {
     const { title, author, body, date, category } = req.body
-    const newPost = new Post({ title, author, body, date, category })
+    let image
+    if(req.files?.image){
+      const result = await uploadImage(req.files.image.tempFilePath)
+      await fs.remove(req.files.image.tempFilePath)
+      console.log(req.files.image.tempFilePath)
+      image = {
+        url: result.secure_url,
+        public_id : result.public_id
+      }
+      req.body.image = image
+    }
+    const newPost = new Post({ title, author, body, date, category, image })
     await newPost.save()
     res.send(newPost)
   } catch (error) {
