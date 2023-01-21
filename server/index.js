@@ -3,6 +3,7 @@ import postRoutes from './routes/posts.routes.js'
 import { connectDB } from "./db.js"
 import fileUpload from "express-fileupload"
 import { PORT } from "./config.js"
+import cors from 'cors'
 
 const app = express()
 
@@ -12,6 +13,8 @@ app.use(fileUpload({
   useTempFiles : true,
   tempFileDir : './tmp'
 }))
+
+app.use(cors())
 
 app.use(postRoutes)
 
