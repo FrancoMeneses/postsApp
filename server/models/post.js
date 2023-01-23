@@ -19,13 +19,13 @@ const postSchema = new mongoose.Schema({
   comments: [
     {
       body: String, 
-      date: Date,
-      default: Date.now 
+      date: Date
     }
   ],
   date: { 
     type: Date,
-    required: true
+    required: true,
+    default: Date.now 
   },
   hidden: { 
     type: Boolean, 
