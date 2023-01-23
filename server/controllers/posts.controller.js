@@ -57,8 +57,8 @@ export const createPost = async (req, res) => {
       req.body.image = image
     }
     const newPost = new Post({ title, author, body, date, category, image })
-    const n = await newPost.save()
-    res.send(n)
+    await newPost.save()
+    return res.json(newPost)
   } catch (error) {
     return res.status(500).json(error)
   }
