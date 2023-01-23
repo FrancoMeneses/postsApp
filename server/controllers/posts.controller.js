@@ -58,7 +58,7 @@ export const createPost = async (req, res) => {
     }
     const newPost = new Post({ title, author, body, date, category, image })
     await newPost.save()
-    return res.json(newPost)
+    res.json(newPost)
   } catch (error) {
     return res.status(500).json(error)
   }
