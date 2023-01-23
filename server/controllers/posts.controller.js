@@ -22,8 +22,13 @@ export const getPosts = async (req, res) => {
 
 export const updatePost = async(req, res) => {
   try {
-    const postUpdated = await Post.findByIdAndUpdate(req.params.id, req.body, { new: true })
-    res.send(postUpdated)
+    if(req.body.comments){
+      const postUpdated = await Post.findByIdAndUpdate(req.params.id, { "$push": { "comments": req.body.comments }}, { new: true })
+      res.send(postUpdated)
+    }else{
+      const postUpdated = await Post.findByIdAndUpdate(req.params.id, req.body, { new: true })
+      res.send(postUpdated)
+    }
   } catch (error) {
     return res.status(500).json(error)
   }
