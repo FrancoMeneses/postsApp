@@ -35,6 +35,7 @@ const postSchema = new mongoose.Schema({
     type: String,
     required: false
   },
+  tags: [String],
   image: {
     url: String,
     public_id: String

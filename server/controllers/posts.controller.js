@@ -51,6 +51,9 @@ export const createPost = async (req, res) => {
   try {
     // const { title, author, body, date, category } = req.body
      const { title, author, body, description, date, category } = req.body
+     let { tags } = req.body
+     console.log(JSON.parse(req.body.tags))
+     tags = JSON.parse(req.body.tags)
     let image
     if(req.files?.image){
       const result = await uploadImage(req.files.image.tempFilePath)
@@ -62,10 +65,11 @@ export const createPost = async (req, res) => {
       }
       req.body.image = image
     }
-    const newPost = new Post({ title, author, body, description, date, category, image })
+    const newPost = new Post({ title, author, body, description, date, category, tags, image })
     await newPost.save()
     return res.json(newPost)
   } catch (error) {
+    console.log(error)
     return res.status(500).json(error)
   }
 }
