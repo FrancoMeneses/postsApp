@@ -49,7 +49,8 @@ export const deletePost = async(req, res) => {
 
 export const createPost = async (req, res) => {
   try {
-    const { title, author, body, date, category } = req.body
+    // const { title, author, body, date, category } = req.body
+     const { title, author, body, description, date, category } = req.body
     let image
     if(req.files?.image){
       const result = await uploadImage(req.files.image.tempFilePath)
@@ -61,7 +62,7 @@ export const createPost = async (req, res) => {
       }
       req.body.image = image
     }
-    const newPost = new Post({ title, author, body, date, category, image })
+    const newPost = new Post({ title, author, body, description, date, category, image })
     await newPost.save()
     return res.json(newPost)
   } catch (error) {

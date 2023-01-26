@@ -27,13 +27,13 @@ const postSchema = new mongoose.Schema({
     required: true,
     default: Date.now 
   },
-  hidden: { 
-    type: Boolean, 
-    default: false
+  description: { 
+    type: String, 
+    required: true
   },
   category: {
     type: String,
-    required: true
+    required: false
   },
   image: {
     url: String,
