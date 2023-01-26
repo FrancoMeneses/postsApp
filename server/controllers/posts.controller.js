@@ -49,10 +49,8 @@ export const deletePost = async(req, res) => {
 
 export const createPost = async (req, res) => {
   try {
-    // const { title, author, body, date, category } = req.body
      const { title, author, body, description, date, category } = req.body
      let { tags } = req.body
-     console.log(JSON.parse(req.body.tags))
      tags = JSON.parse(req.body.tags)
     let image
     if(req.files?.image){
