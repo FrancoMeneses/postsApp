@@ -49,6 +49,7 @@ export const deletePost = async(req, res) => {
 
 export const createPost = async (req, res) => {
   try {
+    console.log(req.body)
      const { title, author, body, description, date, category } = req.body
      let { tags } = req.body
      tags = JSON.parse(req.body.tags)
